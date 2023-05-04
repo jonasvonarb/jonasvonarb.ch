@@ -1,0 +1,57 @@
+@import "./base.styl";
+@import "./fonts.styl";
+
+
+h2
+    font-size: inherit
+    font-weight: inherit
+
+
+h3
+    font-size: inherit
+    font-weight: inherit
+    text-transform: uppercase 
+
+
+a
+    all unset
+    cursor pointer
+    &:hover
+        text-decoration: underline
+
+strong
+    font-weight: 900
+
+em
+.italic
+    font-family: EverettItalic
+
+
+
+details
+    border-bottom: solid black
+    margin-bottom 12px
+
+summary 
+    list-style-type none
+    outline: none;
+    font-size: 1.15em;
+    display: flex
+    justify-content: space-between
+
+summary::-webkit-details-marker 
+    display: none
+
+summary:after 
+    content: "+"
+    transition: all 0.2s
+    transform: rotate(0deg)
+    cursor pointer
+
+
+details[open] summary:after 
+    content: "+"
+    transform: rotate(45deg)
+
+
+

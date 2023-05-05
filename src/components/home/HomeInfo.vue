@@ -4,7 +4,7 @@
       <Pill class="title" text="Jonas von Arb" />
       <Pill
         class="intro"
-        text="Frontend Entwickler und Designer at [A/Z&T](https://azt.ch/)"
+        text="frontend developer, data enthusiast und designer <br/> working at [A/Z&T](https://azt.ch/), Zürich Switzerland"
       />
       <Pill
         class="intro"
@@ -160,7 +160,7 @@ const isLargeScreen = useMediaQuery("(min-width: 600px)");
     position relative
     border solid var(--anthracite)
     border-radius 5px
-    margin-bottom calc(100% + 24px)
+    margin-bottom calc(100vh + 24px)
     // box-shadow: 0px 0px 10px 2px var(--anthracite);
     // -webkit-box-shadow: 0px 0px 10px 2px var(--anthracite);
     // -moz-box-shadow: 0px 0px 10px 2px var(--anthracite);

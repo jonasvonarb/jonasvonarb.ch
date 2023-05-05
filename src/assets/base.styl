@@ -32,9 +32,9 @@
 
 html
   font-size: 62.5%;
+  background: var(--color-background);
 
-
-body {
+body 
   font-family Everett
   min-height: 100vh;
   width: 100vw;
@@ -49,7 +49,7 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+
 
 .small
   font-size: 1.2rem;
@@ -58,7 +58,15 @@ body {
 
 main
 #app
-  height 100vh
-  width: 100vw
+  height 100%
+  width: 100%
   overflow: hidden
 
+@media (max-width: 600px)
+  body
+    min-height -moz-available;
+    min-height -webkit-fill-available;
+    min-height fill-available;
+    font-size: 1.6rem;
+    line-height 1.2
+    letter-spacing: 0.03rem

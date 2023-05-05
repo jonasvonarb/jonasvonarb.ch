@@ -187,19 +187,21 @@ const isLargeScreen = useMediaQuery("(min-width: 600px)");
 @media (max-width: 600px)
   .container
     height 50%;
-    padding 6px
+    padding 14px
     overflow-y hidden
     .header
       top calc(65vh - 70px)
-      width calc(100% - 40px)
+      width calc(100% - 48px)
       grid-template-columns: 1fr;
-      margin 0 20px
+      margin 0 23px
       padding 3px 0
       z-index 0
     .info
-      height 10%
+      padding-top 3px
+      margin-left 5px
     .hide
-      right 4px
+      right 12px
+      top 12px
     .projects
       width 100%;
       top 65vh

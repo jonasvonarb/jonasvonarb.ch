@@ -141,13 +141,15 @@ const isLargeScreen = useMediaQuery("(min-width: 600px)");
       top -18px
       right 12px
   .info
+    margin-left 10px
+    margin-top 0px
     position fixed
     width calc(100% - 48px)
     height auto
     display flex
     flex-direction column
     align-items: flex-start
-    gap 6px
+    gap 8px
   .projects
     padding 0 12px
     position fixed
@@ -161,9 +163,10 @@ const isLargeScreen = useMediaQuery("(min-width: 600px)");
     border solid var(--anthracite)
     border-radius 5px
     margin-bottom calc(100vh + 24px)
-    // box-shadow: 0px 0px 10px 2px var(--anthracite);
-    // -webkit-box-shadow: 0px 0px 10px 2px var(--anthracite);
-    // -moz-box-shadow: 0px 0px 10px 2px var(--anthracite);
+    // border var(--lightGray) solid
+    box-shadow: 0px 0px 12px 2px var(--anthracite);
+    -webkit-box-shadow: 0px 0px 12px 2px var(--anthracite);
+    -moz-box-shadow: 0px 0px 12px 2px var(--anthracite);
     > .subtitle
     > .header
       width 100%

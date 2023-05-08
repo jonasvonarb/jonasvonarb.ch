@@ -33,8 +33,10 @@
     "deploy": "bash ./deploy.sh"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.21.0",
     "@vueuse/core": "^10.1.2",
     "marked": "^4.3.0",
+    "ofetch": "^1.0.1",
     "pinia": "^2.0.32",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"

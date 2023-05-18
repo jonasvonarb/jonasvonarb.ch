@@ -8,6 +8,9 @@
 }
 
 .placeName {
+  display flex
+  align-items: center
+  gap: 3px
   z-index: 200;
   font-size: 20px;
   position: fixed;
@@ -23,3 +26,10 @@
     background-color: black;
     border-radius: 9999%;
 }
+
+@media (max-width: 600px)
+  .placeName 
+    font-size: 15px;
+    right: 41px
+    top: 15px
+

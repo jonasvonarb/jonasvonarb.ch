@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import styles from "./main.module.css";
+import styles from "./main.module.styl";
 
 import citys from "@/assets/world-cities_json";
 
@@ -37,6 +37,7 @@ const ReactMap = ({}) => {
   return (
     <div className={[styles.container].join(" ")}>
       <div className={[styles.placeName].join(" ")}>
+        <div className={[styles.marker].join(" ")} />
         {randomPlace.name}
       </div>
       <Map

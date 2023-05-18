@@ -188,9 +188,9 @@ const isLargeScreen = useMediaQuery("(min-width: 600px)");
 
 @media (max-width: 600px)
   .container
-    height 50%;
-    padding 14px
-    overflow-y hidden
+    height: 100%;
+    padding: 14px;
+    overflow-y: scroll;
     .header
       top calc(65vh - 70px)
       width calc(100% - 48px)

@@ -5,7 +5,7 @@ import HomeInfo from "../components/home/HomeInfo.vue";
 
 <template>
   <main>
-    <!-- <HomeInfo /> -->
+    <HomeInfo />
     <LocMap />
   </main>
 </template>

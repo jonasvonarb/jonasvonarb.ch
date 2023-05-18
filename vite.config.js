@@ -3,17 +3,24 @@ import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 
+import veauryVitePlugins from "veaury/vite/index.js";
 import { createHtmlPlugin } from "vite-plugin-html";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue(),
+    veauryVitePlugins({
+      type: "vue",
+      // Configuration of @vitejs/plugin-vue
+      // vueOptions: {...},
+      // Configuration of @vitejs/plugin-react
+      // reactOptions: {...},
+      // Configuration of @vitejs/plugin-vue-jsx
+      // vueJsxOptions: {...}
+    }),
+    // vue(),
     createHtmlPlugin({
       minify: true,
-      /**
-       * Data that needs to be injected into the index.html ejs template
-       */
       inject: {
         data: {
           // NODE_ENV: process.env.NODE_ENV,

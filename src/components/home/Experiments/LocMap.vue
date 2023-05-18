@@ -1,11 +1,19 @@
 <template>
-  <div v-if="!loading">{{ d }}</div>
-  <div v-else>loading...</div>
+  <div>
+    <div v-if="!loading">{{ d }}</div>
+    <div v-else>loading...</div>
+    <BasicPure />
+  </div>
 </template>
 
 <script setup>
 import { createClient } from "@supabase/supabase-js";
 import { onMounted, ref, watch, watchEffect } from "vue";
+import { applyReactInVue, applyPureReactInVue } from "veaury";
+
+import BasicReactComponent from "./react_app/ReactMap";
+
+const BasicPure = applyPureReactInVue(BasicReactComponent);
 
 const loading = ref(false);
 const d = ref();

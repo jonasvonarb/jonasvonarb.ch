@@ -19,7 +19,9 @@ const loading = ref(false);
 const d = ref();
 
 const supabaseUrl = "https://pgoqiciappgtminvyhev.supabase.co";
-const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
+// const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
+const supabaseKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBnb3FpY2lhcHBndG1pbnZ5aGV2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODM0NDc5ODAsImV4cCI6MTk5OTAyMzk4MH0.UHa8uTLtwQFDWRC-LEJTUCr684R3Aef8WVIenHSHMS4";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 onMounted(() => {

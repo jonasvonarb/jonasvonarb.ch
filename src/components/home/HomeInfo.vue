@@ -98,6 +98,8 @@ const isLargeScreen = useMediaQuery("(min-width: 600px)");
 
 <style lang="stylus">
 .container
+  position fixed
+  z-index 100
   width 100%
   height 100%
   overflow-x hidden
@@ -107,7 +109,7 @@ const isLargeScreen = useMediaQuery("(min-width: 600px)");
   color white
   padding 24px
   .hide
-    height 24px
+    height 30px
     width 24px
     border-radius 5px
     background-color red

@@ -1,0 +1,25 @@
+.container {
+  position: fixed;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.placeName {
+  z-index: 200;
+  font-size: 20px;
+  position: fixed;
+  top: 26px;
+  text-align: right;
+  right: 64px;
+  text-transform: uppercase;
+}
+
+.marker{
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    border-radius: 9999%;
+}

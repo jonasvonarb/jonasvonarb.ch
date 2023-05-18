@@ -1,13 +1,6 @@
 const projects = {
   year2023: [
     {
-      link: "[Arcotex.ch](https://arcotex.ch/)",
-      content: "Prototype chapter for a digital textbook on neuroscience",
-      work: "DCC",
-      colab:
-        "at [Astrom / Zimmer & Tereszkiewicz](https://azt.ch/)",
-    },
-    {
       link: "[The Open Brain](https://www.theopenbrain.org/)",
       content: "Prototype chapter for a digital textbook on neuroscience",
       work: "DCC",
@@ -39,9 +32,11 @@ const projects = {
   year2021: [
     {
       link: "[Gold Iron Silver Coper](https://www.vaidehi.ch/atlas-of-critical-zones/)",
-      content: "Atlas discussing the dependence and appreciation of mankind towards mines, semester porject at HGK Basel",
+      content:
+        "Atlas discussing the dependence and appreciation of mankind towards mines, semester porject at HGK Basel",
       work: "P",
-      colab: "[Vaidehi Hofer](https://www.vaidehi.ch/) [Colaboration] <br/> Marion Fink [Tutor]"
+      colab:
+        "[Vaidehi Hofer](https://www.vaidehi.ch/) [Colaboration] <br/> Marion Fink [Tutor]",
     },
   ],
   year2020: [
@@ -56,4 +51,11 @@ const projects = {
   ],
 };
 
+// {
+//   link: "[Arcotex.ch](https://arcotex.ch/)",
+//   content: "Prototype chapter for a digital textbook on neuroscience",
+//   work: "DCC",
+//   colab:
+//     "at [Astrom / Zimmer & Tereszkiewicz](https://azt.ch/)",
+// },
 export default projects;

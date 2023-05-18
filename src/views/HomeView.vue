@@ -6,6 +6,6 @@ import HomeInfo from "../components/home/HomeInfo.vue";
 <template>
   <main>
     <HomeInfo />
-    <!-- <LocMap /> -->
+    <LocMap />
   </main>
 </template>

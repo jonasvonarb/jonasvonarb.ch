@@ -12,6 +12,7 @@ const randomPlace = citys[(Math.random() * 23018).toFixed(0)];
 const ReactMap = ({}) => {
   const [place, setPlace] = useState([0, 0]);
   const mapRef = useRef();
+  const [loadingFlyTo, setLoadingFlyTo] = useState(false);
 
   useEffect(() => {
     getPlace();
@@ -30,10 +31,12 @@ const ReactMap = ({}) => {
   const olten = [7.90329, 47.34999];
 
   const fly = async (map) => {
-    map.flyTo({ center: [place[1], place[0]], zoom: 4, preloadOnly: true });
-    map.flyTo({ center: olten, zoom: 4, preloadOnly: true });
+    setLoadingFlyTo(true);
+    map.flyTo({ center: [place[1], place[0]], preloadOnly: true });
     await map.once("idle");
-    map.flyTo({ center: [place[1], place[0]], zoom: 10 });
+    console.log("loadded");
+    setLoadingFlyTo(false);
+    map.flyTo({ center: [place[1], place[0]] });
   };
 
   const getPlace = async (d) => {
@@ -52,13 +55,21 @@ const ReactMap = ({}) => {
         <div className={[styles.marker].join(" ")} />
         {randomPlace.name}
       </div>
+      {loadingFlyTo && (
+        <div className={[styles.loaderFly].join(" ")}>
+          <p>
+            We are currently loading the animation to {randomPlace.name} in{" "}
+            {randomPlace.country}.
+          </p>
+        </div>
+      )}
       <Map
         ref={mapRef}
         reuseMaps
         initialViewState={{
           longitude: olten[0],
           latitude: olten[1],
-          zoom: 10,
+          zoom: 8,
         }}
         projection="globe"
         mapboxAccessToken="pk.eyJ1Ijoiam9uYXN2b25hIiwiYSI6ImNrbnl0eG83azFrOWsybnBzaWN3MXJtaWIifQ.ZGtwL5am2jW7AH0OiQGcNg"

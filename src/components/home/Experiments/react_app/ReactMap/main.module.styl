@@ -20,6 +20,31 @@
   text-transform: uppercase;
 }
 
+.loaderFly
+  position fixed
+  top: 0
+  left: 0
+  width: 100vw
+  height: 100vh
+  z-index: 1000000000
+  display: flex
+  justify-content: center
+  align-items: center
+  text-align: center
+  padding-inline: 30px
+  font-size: 50px
+  font-weight: 700
+  mix-blend-mode: difference
+  hyphens: none
+  @media (max-width: 600px)
+    font-size: 10px
+    height: 50vh
+    padding-top: 200px
+    p
+      width: 200px
+
+
+
 .marker{
     width: 10px;
     height: 10px;

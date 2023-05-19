@@ -30,17 +30,9 @@ const ReactMap = ({}) => {
   const olten = [7.90329, 47.34999];
 
   const fly = async (map) => {
-    console.log("try fly");
     map.flyTo({ center: [place[1], place[0]], zoom: 4, preloadOnly: true });
     map.flyTo({ center: olten, zoom: 4, preloadOnly: true });
-    console.log("try idle");
-
-    try {
-      await map.once("idle");
-      console.log("idle");
-    } catch {
-      console.log("not idle");
-    }
+    await map.once("idle");
     map.flyTo({ center: [place[1], place[0]], zoom: 10 });
   };
 

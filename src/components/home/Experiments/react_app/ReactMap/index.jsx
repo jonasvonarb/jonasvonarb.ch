@@ -23,7 +23,7 @@ const ReactMap = ({}) => {
       console.log("initiated fly");
       setTimeout(() => {
         fly(map);
-      }, 100);
+      }, 500);
     }
   }, [place]);
 

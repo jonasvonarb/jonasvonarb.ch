@@ -20,9 +20,14 @@ const ReactMap = ({}) => {
   useEffect(() => {
     const map = mapRef.current;
     if (map) {
-      map.flyTo({ center: [place[1], place[0]] });
+      fly(map);
     }
   }, [place]);
+
+  const fly = async (map) => {
+    await map.once("idle");
+    map.flyTo({ center: [place[1], place[0]], zoom: 10 });
+  };
 
   const getPlace = async (d) => {
     await fetch(

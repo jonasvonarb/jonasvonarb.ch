@@ -20,12 +20,27 @@ const ReactMap = ({}) => {
   useEffect(() => {
     const map = mapRef.current;
     if (map) {
-      fly(map);
+      console.log("initiated fly");
+      setTimeout(() => {
+        fly(map);
+      }, 100);
     }
   }, [place]);
 
+  const olten = [7.90329, 47.34999];
+
   const fly = async (map) => {
-    await map.once("idle");
+    console.log("try fly");
+    map.flyTo({ center: [place[1], place[0]], zoom: 4, preloadOnly: true });
+    map.flyTo({ center: olten, zoom: 4, preloadOnly: true });
+    console.log("try idle");
+
+    try {
+      await map.once("idle");
+      console.log("idle");
+    } catch {
+      console.log("not idle");
+    }
     map.flyTo({ center: [place[1], place[0]], zoom: 10 });
   };
 
@@ -49,8 +64,8 @@ const ReactMap = ({}) => {
         ref={mapRef}
         reuseMaps
         initialViewState={{
-          longitude: 7.90329,
-          latitude: 47.34999,
+          longitude: olten[0],
+          latitude: olten[1],
           zoom: 10,
         }}
         projection="globe"

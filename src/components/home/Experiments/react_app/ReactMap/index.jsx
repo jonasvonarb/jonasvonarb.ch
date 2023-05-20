@@ -58,8 +58,8 @@ const ReactMap = ({}) => {
       {loadingFlyTo && (
         <div className={[styles.loaderFly].join(" ")}>
           <p>
-            We are currently loading the animation to {randomPlace.name} in{" "}
-            {randomPlace.country}.
+            We are currently loading the animation from Olten, to{" "}
+            {randomPlace.name}, {randomPlace.country}.
           </p>
         </div>
       )}

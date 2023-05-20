@@ -43,7 +43,7 @@ const place = ref();
 const nominatimData = ref();
 
 const getLocation = async () => {
-  const data = await fetch("http://ip-api.com/json/")
+  const data = await fetch("https://ipapi.co/json")
     .then((response) => response.json())
     .then((data) => (place.value = data));
 };
@@ -60,16 +60,18 @@ const getPlace = async (d) => {
     // `way["amenity"="ice_cream"](around:1000000,${d.lat},${d.lng});` +
     // `relation["amenity"="ice_cream"](around:1000000,${d.lat},${d.lng}););` +
     // "out 40;"
-    `https://nominatim.openstreetmap.org/search.php?amenity=cafe&state=${d.regionName}&city=${d.city}&format=json`
+    `https://nominatim.openstreetmap.org/search.php?amenity=cafe&state=${d.region}&city=${d.city}&format=json`
   )
     .then((r) => r.json())
     .then((data) => {
+      console.log(data);
       nominatimData.value = data;
     });
 };
 
 watchEffect(() => {
   if (place.value?.city) {
+    console.log(place.value);
     getPlace(place.value);
   }
 });

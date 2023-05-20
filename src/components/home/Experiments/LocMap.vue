@@ -2,7 +2,7 @@
   <div>
     <div v-if="!loading">{{ d }}</div>
     <div v-else>loading...</div>
-    <BasicPure />
+    <BasicPure :supabase="supabase" :markerPos="markers" />
   </div>
 </template>
 
@@ -10,8 +10,14 @@
 import { createClient } from "@supabase/supabase-js";
 import { onMounted, ref, watch, watchEffect } from "vue";
 import { applyReactInVue, applyPureReactInVue } from "veaury";
+import { useGeneralStore } from "@/stores";
 
 import BasicReactComponent from "./react_app/ReactMap";
+import { storeToRefs } from "pinia";
+
+const generalStore = useGeneralStore();
+
+const { markers } = storeToRefs(generalStore);
 
 const BasicPure = applyPureReactInVue(BasicReactComponent);
 
@@ -49,18 +55,8 @@ const getLocation = async () => {
 };
 
 const getPlace = async (d) => {
-  const lat = d.lat;
-  const lng = d.lng;
-  // loading.value = true;
   await fetch(
-    // [out:json][timeout:25];(node["tourism"="museum"](41.884067934462,12.482528686523,41.89707040541,12.500360012054);way["tourism"="museum"](41.884067934462,12.482528686523,41.89707040541,12.500360012054);relation["tourism"="museum"](41.884067934462,12.482528686523,41.89707040541,12.500360012054););out;>;out skel qt;
-    //     "https://www.overpass-api.de/api/interpreter?" +
-    // "data=[out:json][timeout:25];" +
-    // `(nwr["ice_cream"](around:1000000,${d.lat},${d.lng});` +
-    // `way["amenity"="ice_cream"](around:1000000,${d.lat},${d.lng});` +
-    // `relation["amenity"="ice_cream"](around:1000000,${d.lat},${d.lng}););` +
-    // "out 40;"
-    `https://nominatim.openstreetmap.org/search.php?amenity=cafe&state=${d.region}&city=${d.city}&format=json`
+    `https://nominatim.openstreetmap.org/search.php?amenity=bicycle_parking&state=${d.region}&city=${d.city}&format=json`
   )
     .then((r) => r.json())
     .then((data) => {
@@ -71,33 +67,44 @@ const getPlace = async (d) => {
 
 watchEffect(() => {
   if (place.value?.city) {
-    console.log(place.value);
     getPlace(place.value);
   }
 });
 
 watch(nominatimData, (newData) => {
-  // writeData(supabase, newData);
+  writeData(supabase, newData);
   getData(supabase, newData);
 });
 
 const writeData = async (supabase, location) => {
-  const l = location;
-  // const l = location[(Math.random(location.length - 1) * 10).toFixed(0)];
-  try {
-    const { error } = await supabase.from("jonasvoarb_localisations").insert({
-      place_id: l.place_id,
-      display_name: l.display_name,
-      lat: l.lat,
-      lon: l.lon,
-      type: l.type,
-    });
-  } catch (error) {
-    if (error instanceof Error) {
-      console.log("error", error.message);
+  // const l = location;
+  const l = location[(Math.random(location.length - 1) * 10).toFixed(0)];
+  if (l?.place_id) {
+    try {
+      const data = await supabase.from("jonasvoarb_localisations").select();
+      generalStore.setMarker(data.data);
+      console.log(data);
+      const ids = data.data.map((x) => {
+        return x["place_id"];
+      });
+      if (!ids.includes(l?.place_id)) {
+        const { error } = await supabase
+          .from("jonasvoarb_localisations")
+          .insert({
+            place_id: l.place_id,
+            display_name: l.display_name,
+            lat: l.lat,
+            lon: l.lon,
+            type: l.type,
+          });
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log("error", error.message);
+      }
+    } finally {
+      loading.value = false;
     }
-  } finally {
-    loading.value = false;
   }
 };
 

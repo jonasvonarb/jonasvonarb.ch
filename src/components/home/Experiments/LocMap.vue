@@ -2,7 +2,11 @@
   <div>
     <div v-if="!loading">{{ d }}</div>
     <div v-else>loading...</div>
-    <BasicPure :supabase="supabase" :markerPos="markers" />
+    <BasicPure
+      :supabase="supabase"
+      :markerPos="markers"
+      :infoIsActive="infoIsActive"
+    />
   </div>
 </template>
 
@@ -17,7 +21,7 @@ import { storeToRefs } from "pinia";
 
 const generalStore = useGeneralStore();
 
-const { markers } = storeToRefs(generalStore);
+const { markers, infoIsActive } = storeToRefs(generalStore);
 
 const BasicPure = applyPureReactInVue(BasicReactComponent);
 
@@ -78,47 +82,44 @@ watch(nominatimData, (newData) => {
 
 const writeData = async (supabase, location) => {
   // const l = location;
-  const l = location[(Math.random(location.length - 1) * 10).toFixed(0)];
-  if (l?.place_id) {
-    try {
-      const data = await supabase.from("jonasvoarb_localisations").select();
-      generalStore.setMarker(data.data);
-      console.log(data);
-      const ids = data.data.map((x) => {
-        return x["place_id"];
+  const l =
+    location && location[(Math.random(location.length - 1) * 10).toFixed(0)];
+  try {
+    const data = await supabase.from("jonasvoarb_localisations").select();
+    generalStore.setMarker(data.data);
+    const ids = data.data.map((x) => {
+      return x?.["place_id"];
+    });
+    if (l && !ids.includes(l?.place_id)) {
+      const { error } = await supabase.from("jonasvoarb_localisations").insert({
+        place_id: l.place_id,
+        display_name: l.display_name,
+        lat: l.lat,
+        lon: l.lon,
+        type: l.type,
       });
-      if (!ids.includes(l?.place_id)) {
-        const { error } = await supabase
-          .from("jonasvoarb_localisations")
-          .insert({
-            place_id: l.place_id,
-            display_name: l.display_name,
-            lat: l.lat,
-            lon: l.lon,
-            type: l.type,
-          });
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log("error", error.message);
-      }
-    } finally {
-      loading.value = false;
     }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log("error", error.message);
+    }
+  } finally {
+    loading.value = false;
   }
 };
 
 const getData = async (supabase, location) => {
   const l = location[(Math.random(location.length - 1) * 10).toFixed(0)];
+  console.log("location", location);
   try {
     loading.value = true;
     const { data, error } = await supabase
       .from("jonasvoarb_localisations")
       .select();
-
-    if (!data.find((x) => x.place_id === l.place_id)) {
+    if (!data.find((x) => l && x?.place_id === l?.place_id)) {
       writeData(supabase, l);
     }
+
     if (error) throw error;
   } catch (error) {
     if (error instanceof Error) {

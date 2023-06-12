@@ -6,18 +6,18 @@ import citys from "@/assets/world-cities_json";
 
 import Map, { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { useGeneralStore } from "@/stores";
+import DarkMode from "./DarkMode";
 
 const randomPlace = citys[(Math.random() * 23018).toFixed(0)];
 
-const ReactMap = ({ supabase, markerPos }) => {
+const ReactMap = ({ supabase, markerPos, infoIsActive }) => {
   const [place, setPlace] = useState([0, 0]);
   const mapRef = useRef();
   const [loadingFlyTo, setLoadingFlyTo] = useState(false);
 
-  // useEffect(() => {
-  //   console.log("markers", markerPos);
-  // }, [markerPos]);
+  useEffect(() => {
+    console.log("markers", markerPos);
+  }, [markerPos]);
 
   useEffect(() => {
     getPlace();
@@ -52,27 +52,11 @@ const ReactMap = ({ supabase, markerPos }) => {
       });
   };
 
-  // useEffect(() => {
-  //   const jonasvoarbLocalisations = supabase
-  //     .channel("jonasvonarbch")
-  //     .on(
-  //       "postgres_changes",
-  //       {
-  //         event: "INSERT",
-  //         schema: "public",
-  //         table: "jonasvoarb_localisations",
-  //       },
-  //       (payload) => {
-  //         console.log("Change received!", payload);
-  //       }
-  //     )
-  //     .subscribe();
-  // }, []);
-
   return (
     <div className={[styles.container].join(" ")}>
       <div className={[styles.placeName].join(" ")}>
         <div className={[styles.marker].join(" ")} />
+        <DarkMode />
         {randomPlace.name}
       </div>
       {loadingFlyTo && (
@@ -95,10 +79,17 @@ const ReactMap = ({ supabase, markerPos }) => {
         mapboxAccessToken="pk.eyJ1Ijoiam9uYXN2b25hIiwiYSI6ImNrbnl0eG83azFrOWsybnBzaWN3MXJtaWIifQ.ZGtwL5am2jW7AH0OiQGcNg"
         mapStyle="mapbox://styles/jonasvona/clhtambtz002701qsa98pdtte"
       >
-        {markerPos.map((x) => {
+        {markerPos?.map((x) => {
           return (
-            <Marker key={x.place_id} longitude={x.lon} latitude={x.lat} anchor="center">
-              <div className={[styles.marker, styles.negativeMarker].join(" ")} />
+            <Marker
+              key={x?.place_id}
+              longitude={x?.lon}
+              latitude={x?.lat}
+              anchor="center"
+            >
+              <div
+                className={[styles.marker, styles.negativeMarker].join(" ")}
+              />
             </Marker>
           );
         })}

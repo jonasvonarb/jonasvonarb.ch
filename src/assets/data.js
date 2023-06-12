@@ -9,13 +9,13 @@ const projects = {
     },
     {
       link: "[Kuori](https://www.kuori-materials.com/)",
-      content: "Website for the swiss cleantech start-up KUORI",
+      content: "Website for the Swiss cleantech start-up KUORI",
       work: "C",
       colab: "[Benjamin Kunz](https://benjaminkunz.ch/) [Design]",
     },
     {
       link: "[Benjamin Kunz](https://www.benjaminkunz.ch/)",
-      content: "Website for the grafic designer & photographer",
+      content: "Website for the graphic designer & photographer",
       work: "C",
       colab: "[Benjamin Kunz](https://benjaminkunz.ch/) [Design]",
     },
@@ -31,19 +31,19 @@ const projects = {
   ],
   year2021: [
     {
-      link: "[Gold Iron Silver Coper](https://www.vaidehi.ch/atlas-of-critical-zones/)",
+      link: "[Gold Iron Silver Copper](https://www.vaidehi.ch/atlas-of-critical-zones/)",
       content:
         "Atlas discussing the dependence and appreciation of mankind towards mines, semester porject at HGK Basel",
       work: "P",
       colab:
-        "[Vaidehi Hofer](https://www.vaidehi.ch/) [Colaboration] <br/> Marion Fink [Tutor]",
+        "[Vaidehi Hofer](https://www.vaidehi.ch/) [Collaboration] <br/> Marion Fink [Tutor]",
     },
   ],
   year2020: [
     {
       link: "[A Migratory Journal](https://migratoryjournal.jonasvonarb.ch/)",
       content:
-        'Bachelor thesis at HGK Basel awith the topic of "migration to Switzerland"',
+        'Bachelor thesis at HGK Basel with the topic of "migration to Switzerland"',
       work: "DCC",
       colab: "Marion Fink, Ted Davis & Jinsu Ahn [Tutors]",
       info: "Bacherlor Thesis Viscom – HGK Basel, Tutors: Marion Fink, Ted Davis & Jinsu Ahn",

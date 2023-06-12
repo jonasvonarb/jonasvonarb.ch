@@ -14,4 +14,12 @@ import { RouterLink, RouterView } from "vue-router";
   <RouterView />
 </template>
 
-<style lang="stylus" scoped></style>
+<style lang="stylus">
+.mapboxgl-map
+  :last-child
+    pointer-events none
+
+.mapboxgl-canvas-container.mapboxgl-interactive,
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-compass
+  // cursor grabed !important
+</style>

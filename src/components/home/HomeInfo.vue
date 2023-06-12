@@ -1,5 +1,6 @@
 <template>
-  <div class="container">
+  <div class="container" :class="infoIsActive ? 'active' : ''">
+    <div class="hide" @click="setInfoIsActive(!infoIsActive)"></div>
     <div class="info">
       <Pill class="title" text="Jonas von Arb" />
       <Pill
@@ -11,78 +12,91 @@
         text="<a href='mailto:mail@jonasvonarb.ch'>Contact</a>"
       />
     </div>
-    <div class="hide" :class="'active'" />
-    <div v-if="isLargeScreen" class="header small">
-      <div>
-        titel <br />
-        info
+    <template v-if="infoIsActive">
+      <div v-if="isLargeScreen" class="header small">
+        <div>
+          titel <br />
+          info
+        </div>
+        <div>
+          year <br />
+          colab [] or Studio
+        </div>
+        <div class="arrow">
+          <ArrowDown />
+        </div>
       </div>
-      <div>
-        year <br />
-        colab [] or Studio
+      <div class="header small" v-else>
+        <div>
+          titel <br />
+          year <br />
+          info <br />
+          colab [] or Studio
+        </div>
+        <div class="arrow">
+          <ArrowDown />
+        </div>
       </div>
-      <div class="arrow">
-        <ArrowDown />
-      </div>
-    </div>
-    <div class="header small" v-else>
-      <div>
-        titel <br />
-        year <br />
-        info <br />
-        colab [] or Studio
-      </div>
-      <div class="arrow">
-        <ArrowDown />
-      </div>
-    </div>
-    <div class="projects">
-      <div class="subtitle small" v-html="mToH(`### Design, Concept & Code`)" />
-      <template v-for="year in Object.keys(data)">
-        <template v-for="l in data[year]">
-          <div class="project" v-if="l.work === 'DCC'">
-            <div class="title" v-html="mToH(l.link)" />
-            <div
-              class="year"
-              :class="!isLargeScreen ? 'dark' : ''"
-              v-html="year.replace('year', '')"
-            />
-            <div v-html="mToH(l.content)" />
-            <div :class="!isLargeScreen ? 'dark' : ''" v-html="mToH(l.colab)" />
-          </div>
+      <div class="projects">
+        <div
+          class="subtitle small"
+          v-html="mToH(`### Design, Concept & Code`)"
+        />
+        <template v-for="year in Object.keys(data)">
+          <template v-for="l in data[year]">
+            <div class="project" v-if="l.work === 'DCC'">
+              <div class="title" v-html="mToH(l.link)" />
+              <div
+                class="year"
+                :class="!isLargeScreen ? 'dark' : ''"
+                v-html="year.replace('year', '')"
+              />
+              <div v-html="mToH(l.content)" />
+              <div
+                :class="!isLargeScreen ? 'dark' : ''"
+                v-html="mToH(l.colab)"
+              />
+            </div>
+          </template>
         </template>
-      </template>
-      <div class="subtitle small" v-html="mToH(`### Code only`)" />
-      <template v-for="year in Object.keys(data)">
-        <template v-for="l in data[year]">
-          <div class="project" v-if="l.work === 'C'">
-            <div class="title" v-html="mToH(l.link)" />
-            <div
-              class="year"
-              :class="!isLargeScreen ? 'dark' : ''"
-              v-html="year.replace('year', '')"
-            />
-            <div v-html="mToH(l.content)" />
-            <div :class="!isLargeScreen ? 'dark' : ''" v-html="mToH(l.colab)" />
-          </div>
+        <div class="subtitle small" v-html="mToH(`### Code only`)" />
+        <template v-for="year in Object.keys(data)">
+          <template v-for="l in data[year]">
+            <div class="project" v-if="l.work === 'C'">
+              <div class="title" v-html="mToH(l.link)" />
+              <div
+                class="year"
+                :class="!isLargeScreen ? 'dark' : ''"
+                v-html="year.replace('year', '')"
+              />
+              <div v-html="mToH(l.content)" />
+              <div
+                :class="!isLargeScreen ? 'dark' : ''"
+                v-html="mToH(l.colab)"
+              />
+            </div>
+          </template>
         </template>
-      </template>
-      <div class="subtitle small" v-html="mToH(`### Print`)" />
-      <template v-for="year in Object.keys(data)">
-        <template v-for="l in data[year]">
-          <div class="project" v-if="l.work === 'P'">
-            <div class="title" v-html="mToH(l.link)" />
-            <div
-              class="year"
-              :class="!isLargeScreen ? 'dark' : ''"
-              v-html="year.replace('year', '')"
-            />
-            <div v-html="mToH(l.content)" />
-            <div :class="!isLargeScreen ? 'dark' : ''" v-html="mToH(l.colab)" />
-          </div>
+        <div class="subtitle small" v-html="mToH(`### Print`)" />
+        <template v-for="year in Object.keys(data)">
+          <template v-for="l in data[year]">
+            <div class="project" v-if="l.work === 'P'">
+              <div class="title" v-html="mToH(l.link)" />
+              <div
+                class="year"
+                :class="!isLargeScreen ? 'dark' : ''"
+                v-html="year.replace('year', '')"
+              />
+              <div v-html="mToH(l.content)" />
+              <div
+                :class="!isLargeScreen ? 'dark' : ''"
+                v-html="mToH(l.colab)"
+              />
+            </div>
+          </template>
         </template>
-      </template>
-    </div>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -92,6 +106,11 @@ import { mToH } from "@/helper";
 import ArrowDown from "@/icons/ArrowDown.vue";
 import { useMediaQuery } from "@vueuse/core";
 import data from "@/assets/data";
+import { useGeneralStore } from "../../stores";
+import { storeToRefs } from "pinia";
+const store = useGeneralStore();
+const setInfoIsActive = store.setInfoIsActive;
+const { infoIsActive } = storeToRefs(store);
 
 const isLargeScreen = useMediaQuery("(min-width: 600px)");
 </script>
@@ -108,17 +127,24 @@ const isLargeScreen = useMediaQuery("(min-width: 600px)");
   align-items flex-start
   color white
   padding 24px
+  pointer-events none
+  &.active
+    pointer-events all
+    .hide
+      background-color red
   .hide
     height 30px
     width 24px
     border-radius 5px
-    background-color red
+    background-color green
     position fixed
     right 36px
     border solid var(--lightGray)
     cursor pointer
+    z-index 2000
+    pointer-events all
     &:hover
-      background-color blue
+      opacity 0.6
   .header
     pointer-events none
     position fixed

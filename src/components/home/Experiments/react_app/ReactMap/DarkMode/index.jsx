@@ -8,11 +8,12 @@ const DarkMode = ({}) => {
   }, []);
   const getData = async (d) => {
     await fetch(
-      "https://ucdpapi.pcr.uu.se/api/gedevents/23.1?pagesize=100&Country=90,91,92"
+      "https://ucdpapi.pcr.uu.se/api/gedevents/23.1?pagesize=100&StartDate=2014-01-15&EndDate=2015-02-28",
+      { mode: "cors" }
     )
-      .then((r) => r.json())
+      .then((r) => console.log("ucdpapi", r))
       .then((data) => {
-        console.log(data);
+        console.log("ucdpapi", data);
         // nominatimData.value = data;
       });
   };

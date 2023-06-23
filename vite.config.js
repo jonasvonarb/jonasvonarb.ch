@@ -8,6 +8,17 @@ import { createHtmlPlugin } from "vite-plugin-html";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    proxy: {
+      // with options: http://localhost:5173/api/bar-> http://jsonplaceholder.typicode.com/bar
+      "/api": {
+        target: "https://ucdpapi.pcr.uu.se/api/gedevents/23.1?pagesize=100",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
+
   plugins: [
     veauryVitePlugins({
       type: "vue",

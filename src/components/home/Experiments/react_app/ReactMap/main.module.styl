@@ -1,0 +1,81 @@
+.container 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+
+.placeName {
+  display flex
+  align-items: center
+  gap: 3px
+  z-index: 200;
+  font-size: 20px;
+  position: fixed;
+  top: 26px;
+  text-align: right;
+  right: 64px;
+  text-transform: uppercase;
+}
+
+.loaderFly
+  position fixed
+  top: 0
+  left: 0
+  width: 100vw
+  height: 100vh
+  z-index: 1000000000
+  display: flex
+  justify-content: center
+  align-items: center
+  text-align: center
+  pointer-events: none
+  padding-inline: 30px
+  font-size: 50px
+  font-weight: 700
+  mix-blend-mode: difference
+  hyphens: none
+  p
+    max-width: 1200px
+  @media (max-width: 1200px)
+    font-size: 20px
+    height: 50vh
+    padding-top: 200px
+    p
+      width: 300px
+
+
+
+:global(.mapboxgl-marker)
+  cursor pointer
+  .marker
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    border-radius: 9999%;
+    &.negativeMarker
+      width: 15px
+      height: 15px
+      background-color: rgba(255,255,255,0.5)
+      cursor pointer
+      -webkit-box-shadow: 0px 0px 5px 1px red;
+      -moz-box-shadow: 0px 0px 5px 1px red;
+      box-shadow: 0px 0px 5px 1px red;
+  &:hover
+    .marker
+      &.negativeMarker
+        background-color: red
+        -webkit-box-shadow: 0px 0px 5px 1px black;
+        -moz-box-shadow: 0px 0px 5px 1px black;
+        box-shadow: 0px 0px 5px 1px black;
+
+     
+
+
+@media (max-width: 600px)
+  .placeName 
+    font-size: 15px;
+    right: 41px
+    top: 15px
+

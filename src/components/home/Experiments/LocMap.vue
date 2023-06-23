@@ -2,7 +2,11 @@
   <div>
     <div v-if="!loading">{{ d }}</div>
     <div v-else>loading...</div>
-    <BasicPure />
+    <BasicPure
+      :supabase="supabase"
+      :markerPos="markers"
+      :infoIsActive="infoIsActive"
+    />
   </div>
 </template>
 
@@ -10,8 +14,14 @@
 import { createClient } from "@supabase/supabase-js";
 import { onMounted, ref, watch, watchEffect } from "vue";
 import { applyReactInVue, applyPureReactInVue } from "veaury";
+import { useGeneralStore } from "@/stores";
 
 import BasicReactComponent from "./react_app/ReactMap";
+import { storeToRefs } from "pinia";
+
+const generalStore = useGeneralStore();
+
+const { markers, infoIsActive } = storeToRefs(generalStore);
 
 const BasicPure = applyPureReactInVue(BasicReactComponent);
 
@@ -43,27 +53,18 @@ const place = ref();
 const nominatimData = ref();
 
 const getLocation = async () => {
-  const data = await fetch("http://ip-api.com/json/")
+  const data = await fetch("https://ipapi.co/json")
     .then((response) => response.json())
     .then((data) => (place.value = data));
 };
 
 const getPlace = async (d) => {
-  const lat = d.lat;
-  const lng = d.lng;
-  // loading.value = true;
   await fetch(
-    // [out:json][timeout:25];(node["tourism"="museum"](41.884067934462,12.482528686523,41.89707040541,12.500360012054);way["tourism"="museum"](41.884067934462,12.482528686523,41.89707040541,12.500360012054);relation["tourism"="museum"](41.884067934462,12.482528686523,41.89707040541,12.500360012054););out;>;out skel qt;
-    //     "https://www.overpass-api.de/api/interpreter?" +
-    // "data=[out:json][timeout:25];" +
-    // `(nwr["ice_cream"](around:1000000,${d.lat},${d.lng});` +
-    // `way["amenity"="ice_cream"](around:1000000,${d.lat},${d.lng});` +
-    // `relation["amenity"="ice_cream"](around:1000000,${d.lat},${d.lng}););` +
-    // "out 40;"
-    `https://nominatim.openstreetmap.org/search.php?amenity=cafe&state=${d.regionName}&city=${d.city}&format=json`
+    `https://nominatim.openstreetmap.org/search.php?amenity=bicycle_parking&state=${d.region}&city=${d.city}&format=json`
   )
     .then((r) => r.json())
     .then((data) => {
+      console.log(data);
       nominatimData.value = data;
     });
 };
@@ -75,21 +76,29 @@ watchEffect(() => {
 });
 
 watch(nominatimData, (newData) => {
-  // writeData(supabase, newData);
+  writeData(supabase, newData);
   getData(supabase, newData);
 });
 
 const writeData = async (supabase, location) => {
-  const l = location;
-  // const l = location[(Math.random(location.length - 1) * 10).toFixed(0)];
+  // const l = location;
+  const l =
+    location && location[(Math.random(location.length - 1) * 10).toFixed(0)];
   try {
-    const { error } = await supabase.from("jonasvoarb_localisations").insert({
-      place_id: l.place_id,
-      display_name: l.display_name,
-      lat: l.lat,
-      lon: l.lon,
-      type: l.type,
+    const data = await supabase.from("jonasvoarb_localisations").select();
+    generalStore.setMarker(data.data);
+    const ids = data.data.map((x) => {
+      return x?.["place_id"];
     });
+    if (l && !ids.includes(l?.place_id)) {
+      const { error } = await supabase.from("jonasvoarb_localisations").insert({
+        place_id: l.place_id,
+        display_name: l.display_name,
+        lat: l.lat,
+        lon: l.lon,
+        type: l.type,
+      });
+    }
   } catch (error) {
     if (error instanceof Error) {
       console.log("error", error.message);
@@ -101,15 +110,16 @@ const writeData = async (supabase, location) => {
 
 const getData = async (supabase, location) => {
   const l = location[(Math.random(location.length - 1) * 10).toFixed(0)];
+  console.log("location", location);
   try {
     loading.value = true;
     const { data, error } = await supabase
       .from("jonasvoarb_localisations")
       .select();
-
-    if (!data.find((x) => x.place_id === l.place_id)) {
+    if (!data.find((x) => l && x?.place_id === l?.place_id)) {
       writeData(supabase, l);
     }
+
     if (error) throw error;
   } catch (error) {
     if (error instanceof Error) {
